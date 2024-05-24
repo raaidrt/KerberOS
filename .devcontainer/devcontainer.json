@@ -1,0 +1,5 @@
+//devcontainer.json
+{
+    "name": "kerberos-dev",
+    "build": { "dockerfile": "../Dockerfile" }
+}
