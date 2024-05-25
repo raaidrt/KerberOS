@@ -17,4 +17,9 @@ RUN curl -s https://ftp.gnu.org/gnu/gdb/gdb-14.2.tar.gz --output gdb-14.2.tar.gz
     && rm -rf gdb-14.2 \
     && rm gdb-14.2.tar.gz
 
+RUN DEBIAN_FRONTEND=noninteractive apt-get --quiet --yes update \
+    && apt-get --quiet --yes install grub2-common qemu-system \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists
+
 ENTRYPOINT [ "/bin/bash" ]
