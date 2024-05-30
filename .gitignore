@@ -56,3 +56,8 @@ dkms.conf
 
 # Kernel
 *.bin
+
+# Disk Images
+*.iso
+isodir
+sysroot
