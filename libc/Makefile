@@ -39,6 +39,7 @@ string/memmove.o \
 string/memset.o \
 string/strlen.o \
 bufwriter/bufwriter.o \
+stack_protection/stack_protection.o \
 
 HOSTEDOBJS=\
 $(ARCH_HOSTEDOBJS) \
