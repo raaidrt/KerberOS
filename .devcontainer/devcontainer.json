@@ -1,5 +1,8 @@
 // devcontainer.json
 {
     "name": "kerberos-dev",
-    "build": { "dockerfile": "../Dockerfile" }
+    "build": { "dockerfile": "../Dockerfile" },
+    "customizations": {
+        "vscode": { "extensions": [ "ms-vscode.cpptools" ] }
+    },
 }
