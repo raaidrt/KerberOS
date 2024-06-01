@@ -185,6 +185,7 @@ int printf(const char* restrict format, ...) {
 		}
 		ptr++;
 	}
+	buffer_putchar(&buffer, '\0');
 	flush(&buffer);
 	va_end(parameters);
 	return total_written;
