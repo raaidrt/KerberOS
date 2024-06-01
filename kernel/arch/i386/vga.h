@@ -3,6 +3,19 @@
 
 #include <stdint.h>
 
+/** 
+ * FBCell - a packed memory representation of a framebuffer cell
+ * The memory representation of a framebuffer cell is 
+ * 
+ * Bit:     | 15 14 13 12 11 10 9 8 | 7 6 5 4 | 3 2 1 0 |
+ * Content: | ASCII                 | FG      | BG      |
+ */
+struct FBCell {
+	uint8_t ascii;
+	uint8_t fg: 4;
+	uint8_t bg: 4;
+} __attribute__((packed));
+
 enum vga_color {
 	VGA_COLOR_BLACK = 0,
 	VGA_COLOR_BLUE = 1,
@@ -23,11 +36,15 @@ enum vga_color {
 };
 
 static inline uint8_t vga_entry_color(enum vga_color fg, enum vga_color bg) {
-	return fg | bg << 4;
+	return bg | fg << 4;
 }
 
-static inline uint16_t vga_entry(unsigned char uc, uint8_t color) {
-	return (uint16_t) uc | (uint16_t) color << 8;
+static inline struct FBCell vga_entry(unsigned char uc, uint8_t color) {
+	struct FBCell cell;
+	cell.ascii = uc; 
+	cell.fg = color >> 4;
+	cell.bg = color & 0xf;
+	return cell;
 }
 
 #endif
