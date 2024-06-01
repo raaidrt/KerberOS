@@ -2,6 +2,9 @@
 #define _BUFWRITER_H 1
 #include <stddef.h>
 
+#ifdef __cplusplus 
+extern "C" { 
+#endif
 typedef size_t (*fn_writen)(char*, size_t);
 
 /** Buffer - a data structure that stores a char pointer `buf`, as well as 
@@ -39,4 +42,8 @@ void flush(struct Buffer *buffer);
 */
 void buffer_putchar(struct Buffer *buffer, char c);
 
-#endif 
+#ifdef __cplusplus
+}
+#endif
+
+#endif // _BUFWRITER
