@@ -8,7 +8,8 @@
 enum PrintState { FORMAT_SPECIFIER, FORMAT_WRITE_ARG, CHAR_WRITE };
 enum FormatWriteKind { NOT_FORMAT, INT, CHAR, STRING };
 
-/** writen - writes `n` bytes to the display of the kernel
+/** 
+ * writen - writes `n` bytes to the display of the kernel
  * @src: a `char` array from which we start writing
  * @n: the number of bytes we write
  * 
@@ -29,7 +30,8 @@ size_t writen(char *src, size_t n) {
 	return n_written;
 }
 
-/** write_char - writes one character to the buffer
+/** 
+ * write_char - writes one character to the buffer
  * @buffer: the buffer to write to
  * @c: the character to write
  * 
@@ -40,7 +42,8 @@ static size_t write_char(struct Buffer *buffer, char c) {
 	return 1;
 }
 
-/** write_string - writes the string `s` to the buffer 
+/** 
+ * write_string - writes the string `s` to the buffer 
  * @buffer: the buffer to write to
  * @s: the string to write
  * 
@@ -54,7 +57,8 @@ static size_t write_string(struct Buffer *buffer, const char *s) {
 	return size_s;
 }
 
-/** write_positive_int - writes a positive 32-bit integer to the buffer 
+/** 
+ * write_positive_int - writes a positive 32-bit integer to the buffer 
  * @buffer: the buffer to write to
  * @d: the positive integer to write
  * 
@@ -69,7 +73,8 @@ static size_t write_positive_int(struct Buffer *buffer, int d) {
 	return result + 1;
 }
 
-/** write_int - writes a 32-bit integer to the buffer 
+/** 
+ * write_int - writes a 32-bit integer to the buffer 
  * @buffer: the buffer to write to 
  * @d: the integer to write
  * 
