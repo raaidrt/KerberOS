@@ -3,6 +3,10 @@
     "name": "kerberos-dev",
     "build": { "dockerfile": "../Dockerfile" },
     "customizations": {
-        "vscode": { "extensions": [ "ms-vscode.cpptools" ] }
+        "vscode": 
+            { "extensions": [ 
+                "ms-vscode.cpptools",
+                "ms-vscode.makefile-tools"
+            ] }
     },
 }
