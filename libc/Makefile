@@ -40,6 +40,7 @@ string/memset.o \
 string/strlen.o \
 bufwriter/bufwriter.o \
 stack_protection/stack_protection.o \
+io/io.o \
 
 HOSTEDOBJS=\
 $(ARCH_HOSTEDOBJS) \
@@ -66,6 +67,9 @@ libk.a: $(LIBK_OBJS)
 
 .c.o:
 	$(CC) -MD -c $< -o $@ -std=gnu11 $(CFLAGS) $(CPPFLAGS)
+
+.S.o:
+	$(CC) -MD -c $< -o $@ -masm=intel $(CFLAGS) $(CPPFLAGS)
 
 .c.S:
 	$(CC) -MD -c $< -o $@ $(CFLAGS) $(CPPFLAGS)
