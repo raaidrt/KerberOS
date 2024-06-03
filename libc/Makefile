@@ -41,6 +41,7 @@ string/strlen.o \
 bufwriter/bufwriter.o \
 stack_protection/stack_protection.o \
 io/io.o \
+panic/panic.o \
 
 HOSTEDOBJS=\
 $(ARCH_HOSTEDOBJS) \
