@@ -61,3 +61,6 @@ dkms.conf
 *.iso
 isodir
 sysroot
+
+# Log files
+*.log
