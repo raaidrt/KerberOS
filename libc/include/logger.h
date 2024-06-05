@@ -3,6 +3,11 @@
 
 #define _DEBUG_LOG 1
 
-void dbg_log();
+#ifdef _DEBUG_LOG
+#include <serial.h>
+__attribute__((constructor)) void logger_init();
+#endif
+
+void dbg_logf(const char* restrict format, ...);
 
 #endif

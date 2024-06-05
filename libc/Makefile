@@ -32,6 +32,7 @@ $(ARCH_FREEOBJS) \
 stdio/printf.o \
 stdio/putchar.o \
 stdio/puts.o \
+stdio/fprintf.o \
 stdlib/abort.o \
 string/memcmp.o \
 string/memcpy.o \
@@ -43,6 +44,7 @@ stack_protection/stack_protection.o \
 io/io.o \
 panic/panic.o \
 serial/serial.o \
+logger/logger.o \
 
 HOSTEDOBJS=\
 $(ARCH_HOSTEDOBJS) \
