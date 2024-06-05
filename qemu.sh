@@ -5,17 +5,13 @@ set -e
 while getopts ":d:h" opt; do
   case $opt in
     d)
-      if [ -z "$OPTARG" ]; then 
-        qemu-system-$(./target-triplet-to-arch.sh $HOST) -serial file:logfile.log -cdrom myos.iso
-      else 
-        qemu-system-$(./target-triplet-to-arch.sh $HOST) -serial file:"$OPTARG" -cdrom myos.iso
-      fi
+      qemu-system-$(./target-triplet-to-arch.sh $HOST) -serial file:"$OPTARG" -cdrom myos.iso
       ;;
     h) 
       echo "Usage: ./qemu.sh [OPTIONS]"
       echo "OPTIONS:"
-      echo "  -d [logfile] Starts logging to a specified logfile."
-      echo "               If no logfile is specified, logs to log.txt."
+      echo "  -d <logfile> Starts logging to a specified logfile."
+      echo "               Note: You must specify a logfile. Try logfile.log"
       echo "  -h           Prints this help page."
       ;;
     \?)

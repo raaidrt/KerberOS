@@ -42,6 +42,7 @@ bufwriter/bufwriter.o \
 stack_protection/stack_protection.o \
 io/io.o \
 panic/panic.o \
+serial/serial.o \
 
 HOSTEDOBJS=\
 $(ARCH_HOSTEDOBJS) \
