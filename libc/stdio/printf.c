@@ -95,20 +95,8 @@ static size_t write_int(struct Buffer *buffer, int d) {
 	return write_positive_int(buffer, d);
 }
 
-int printf(const char* restrict format, ...) {
+int fprintf(struct Buffer *buffer, const char* restrict format, va_list parameters) {
 	// setup va_args
-	va_list parameters;
-	va_start(parameters, format);
-
-	// Setup buffer
-	size_t buf_len = 56;
-	char buf[buf_len];
-	struct Buffer buffer;
-	buffer.buf = buf;
-	buffer.buf_len = buf_len;
-	buffer.n_written = 0;
-	buffer.writen = &writen;
-
 	char *ptr = (char *) format;
 	enum PrintState state = CHAR_WRITE;
 	enum FormatWriteKind write_kind = NOT_FORMAT;
@@ -161,7 +149,7 @@ int printf(const char* restrict format, ...) {
 		size_t additional_written;
 		switch (state) {
 		case CHAR_WRITE:
-			buffer_putchar(&buffer, c);
+			buffer_putchar(buffer, c);
 			total_written++;
 			if (total_written > INT_MAX) {
 				return -1; // overflow
@@ -172,13 +160,13 @@ int printf(const char* restrict format, ...) {
 			additional_written = 0;
 			switch (write_kind) {
 			case INT:
-				additional_written = write_int(&buffer, va_arg(parameters, int));
+				additional_written = write_int(buffer, va_arg(parameters, int));
 				break;
 			case STRING:
-				additional_written = write_string(&buffer, va_arg(parameters, const char *));
+				additional_written = write_string(buffer, va_arg(parameters, const char *));
 				break;
 			case CHAR:
-				additional_written = write_char(&buffer, (char) va_arg(parameters, int));
+				additional_written = write_char(buffer, (char) va_arg(parameters, int));
 				break;
 			case NOT_FORMAT:;
 			}
@@ -190,8 +178,23 @@ int printf(const char* restrict format, ...) {
 		}
 		ptr++;
 	}
-	buffer_putchar(&buffer, '\0');
-	flush(&buffer);
+	buffer_putchar(buffer, '\0');
+	flush(buffer);
 	va_end(parameters);
 	return total_written;
+}
+
+int printf(const char* restrict format, ...) {
+	va_list parameters;
+	va_start(parameters, format);
+
+	// Setup buffer
+	size_t buf_len = 56;
+	char buf[buf_len];
+	struct Buffer buffer;
+	buffer.buf = buf;
+	buffer.buf_len = buf_len;
+	buffer.n_written = 0;
+	buffer.writen = &writen;
+	return fprintf(&buffer, format, parameters);
 }
