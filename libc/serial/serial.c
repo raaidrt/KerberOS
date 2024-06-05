@@ -29,7 +29,7 @@ void serial_configure_buffer(unsigned short com)
     outb(SERIAL_FIFO_COMMAND_PORT(com), 0b11000111);
 }
 
-void serial_intiailize()
+void serial_initialize()
 {
     serial_configure_baud_rate(SERIAL_COM1_BASE, 2);
     serial_configure_line(SERIAL_COM1_BASE);

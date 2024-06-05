@@ -7,6 +7,7 @@
 
 void kernel_main(void) {
 	terminal_initialize();
+	serial_initialize();
 	serial_putchar('c');
 	printf("Hello, %s World %d!\nHere is another line\n", "kernel", 42);
 }
