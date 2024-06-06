@@ -5,11 +5,7 @@
 #include <bufwriter.h>
 #include <serial.h>
 
-#ifdef _DEBUG_LOG 
-__attribute__((constructor)) void logger_init() {
-    serial_initialize();
-}
-#endif
+static int serial_initialized = 0;
 
 size_t log_writen(char *src, size_t n) {
 	size_t n_written = 0;
@@ -24,6 +20,10 @@ size_t log_writen(char *src, size_t n) {
 }
 
 void dbg_logf(const char* restrict format, ...) {
+	if (serial_initialized == 0) {
+		serial_initialized = 1;
+		serial_initialize();
+	}
 	va_list parameters;
 	va_start(parameters, format);
 
