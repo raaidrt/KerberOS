@@ -69,8 +69,13 @@ libc.a: $(OBJS)
 libk.a: $(LIBK_OBJS)
 	$(AR) rcs $@ $(LIBK_OBJS)
 
+ifdef DEBUG
+.c.o:
+	$(CC) -DDEBUG -MD -c $< -o $@ -std=gnu11 $(CFLAGS) $(CPPFLAGS)
+else 
 .c.o:
 	$(CC) -MD -c $< -o $@ -std=gnu11 $(CFLAGS) $(CPPFLAGS)
+endif
 
 .S.o:
 	$(CC) -MD -c $< -o $@ -masm=intel $(CFLAGS) $(CPPFLAGS)
