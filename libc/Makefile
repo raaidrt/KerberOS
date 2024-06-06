@@ -32,6 +32,7 @@ $(ARCH_FREEOBJS) \
 stdio/printf.o \
 stdio/putchar.o \
 stdio/puts.o \
+stdio/fprintf.o \
 stdlib/abort.o \
 string/memcmp.o \
 string/memcpy.o \
@@ -42,6 +43,8 @@ bufwriter/bufwriter.o \
 stack_protection/stack_protection.o \
 io/io.o \
 panic/panic.o \
+serial/serial.o \
+logger/logger.o \
 
 HOSTEDOBJS=\
 $(ARCH_HOSTEDOBJS) \
@@ -66,8 +69,13 @@ libc.a: $(OBJS)
 libk.a: $(LIBK_OBJS)
 	$(AR) rcs $@ $(LIBK_OBJS)
 
+ifdef DEBUG
+.c.o:
+	$(CC) -DDEBUG -MD -c $< -o $@ -std=gnu11 $(CFLAGS) $(CPPFLAGS)
+else 
 .c.o:
 	$(CC) -MD -c $< -o $@ -std=gnu11 $(CFLAGS) $(CPPFLAGS)
+endif
 
 .S.o:
 	$(CC) -MD -c $< -o $@ -masm=intel $(CFLAGS) $(CPPFLAGS)
