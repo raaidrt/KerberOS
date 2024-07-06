@@ -1,0 +1,15 @@
+version: '3'
+services:
+  kerberos-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/workspaces/kerberos
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY=host.docker.internal:0
+      # - DISPLAY=rt.local:0
+    working_dir: /workspaces/kerberos
+    tty: true
+    stdin_open: true
