@@ -5,7 +5,7 @@
 #include <logger.h>
 #include <serial.h>
 
-#define __is_myos_kernel 1
+#define __is_kerberos_kernel 1
 
 void kernel_main(void) {
 	terminal_initialize();

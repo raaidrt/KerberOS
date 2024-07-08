@@ -1,3 +1,5 @@
+export KERNEL_NAME=kerberos
+
 SYSTEM_HEADER_PROJECTS="libc kernel"
 PROJECTS="libc kernel"
 

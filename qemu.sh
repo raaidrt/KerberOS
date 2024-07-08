@@ -5,7 +5,7 @@ while getopts ":d:h" opt; do
   case $opt in
     d)
       . ./iso.sh -d
-      qemu-system-$(./target-triplet-to-arch.sh $HOST) -serial file:"$OPTARG" -cdrom myos.iso
+      qemu-system-$(./target-triplet-to-arch.sh $HOST) -serial file:"$OPTARG" -cdrom ${KERNEL_NAME}.iso
       ;;
     h) 
       echo "Usage: ./qemu.sh [OPTIONS]"
@@ -24,5 +24,5 @@ done
 
 if [ $OPTIND -eq 1 ]; then
   . ./iso.sh
-  qemu-system-$(./target-triplet-to-arch.sh $HOST) -cdrom myos.iso
+  qemu-system-$(./target-triplet-to-arch.sh $HOST) -cdrom ${KERNEL_NAME}.iso
 fi
