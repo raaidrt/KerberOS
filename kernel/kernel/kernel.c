@@ -9,7 +9,7 @@
 
 void kernel_main(void) {
 	terminal_initialize();
-	gdt_initialize();
-	dbg_logf("Hey there, this is a logged statement %d\n", 1);
 	printf("Hello, %s World %d!\nHere is another line\n", "kernel", 42);
+	gdt_initialize();
+	printf("GDT Intialization complete\n");
 }
