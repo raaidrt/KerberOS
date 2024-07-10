@@ -7,7 +7,7 @@ export MAKE=${MAKE:-make}
 export HOST=${HOST:-$(./default-host.sh)}
 
 export AR=${HOST}-ar
-export AS=${HOST}-as
+export AS=nasm
 export CC=${HOST}-gcc
 
 export PREFIX=/usr
@@ -18,6 +18,7 @@ export INCLUDEDIR=$PREFIX/include
 
 export CFLAGS='-O2 -g'
 export CPPFLAGS=''
+export ASFLAGS='-f elf'
 
 # Configure the cross-compiler to use the desired system root.
 export SYSROOT="$(pwd)/sysroot"
