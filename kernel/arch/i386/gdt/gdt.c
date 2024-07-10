@@ -1,10 +1,11 @@
-#include <kernel/gdt.h>
-#include <kernel/gdt_asm.h>
+#include <kernel/gdt/gdt.h>
+#include <kernel/gdt/gdt_asm.h>
+#include <kernel/interrupt/flag.h>
 #include <logger.h>
 
 void gdt_initialize() {
     dbg_logf("Disabling Interrupts\n");
-    disable_interrupts();
+    clear_interrupt_flag();
     
     dbg_logf("Initializing the Global Descriptor Table...");
     struct access null_descriptor_access;
@@ -26,10 +27,10 @@ void gdt_initialize() {
         0xC
     );
 
-    gp.address = (unsigned int) gdt;
-    gp.size = sizeof(gdt);
+    gdt_pointer.address = (unsigned int) gdt;
+    gdt_pointer.size = sizeof(gdt);
 
-    load_gdt(gp);
+    load_gdt(gdt_pointer);
     dbg_logf("DONE\n");
 
     dbg_logf("Loading segment registers...");
@@ -38,15 +39,3 @@ void gdt_initialize() {
 
 }
 
-/* 
-uint16_t encode_gdt_entry(uint16_t offset, uint8_t ti, uint8_t rpl)
-{ */
-    /*
-     * Bit:     | 15                                3 | 2  | 1 0 |
-     * Content: | offset (index)                      | ti | rpl |
-     */ /*
-    return offset << 3 
-         | ti << 2
-         | rpl; 
-}
-*/

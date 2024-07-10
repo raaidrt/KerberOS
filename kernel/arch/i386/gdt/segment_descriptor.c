@@ -1,4 +1,4 @@
-#include <kernel/segment_descriptor.h>
+#include <kernel/gdt/segment_descriptor.h>
 
 struct access encode_access_byte(
     uint8_t a, 
