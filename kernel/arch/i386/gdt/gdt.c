@@ -27,8 +27,8 @@ void gdt_initialize() {
         0xC
     );
 
-    gdt_pointer.address = (unsigned int) gdt;
-    gdt_pointer.size = sizeof(gdt);
+    gdt_pointer.base = (unsigned int) gdt;
+    gdt_pointer.limit = sizeof(gdt) - 1;
 
     load_gdt(gdt_pointer);
     dbg_logf("DONE\n");

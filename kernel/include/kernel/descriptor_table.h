@@ -9,8 +9,8 @@
 #define DESCRIPTOR_TABLE(TABLE, NUM_ENTRIES) \
     struct TABLE##_entry TABLE [NUM_ENTRIES];\
     struct TABLE {\
-        unsigned short size;\
-        unsigned int address;\
+        unsigned short limit;\
+        unsigned int base;\
     } __attribute__((packed));\
     struct TABLE TABLE##_pointer;
     
