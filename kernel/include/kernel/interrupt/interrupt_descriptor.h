@@ -1,3 +1,5 @@
+#ifndef _INTERRUPT_DESCRIPTOR_H
+#define _INTERRUPT_DESCRIPTOR_H
 /** 
  * Interrupt Descriptor Table (IDT) Entry
  *
@@ -5,6 +7,15 @@
  */
 
 #include <stdint.h>
+#include <kernel/gdt/segment_selector.h>
+
+enum interrupt_gate_kind {
+    TASK_GATE = 0b0101,
+    INTERRUPT_GATE_16_BITS = 0b0110,
+    INTERRUPT_GATE_32_BITS = 0b1110,
+    TRAP_GATE_16_BITS = 0b0111,
+    TRAP_GATE_32_BITS = 0b1111
+};
 
 /**
  * An entry in the Interrupt Descriptor Table (IDT)
@@ -19,12 +30,10 @@
  */ 
 struct idt_entry {
     uint16_t offset_low;
-    uint16_t segment_selector;
-    uint8_t reserved: 5;
-    uint8_t zero_low: 3;
-    uint8_t one_one_zero: 3;
-    uint8_t d: 1;
-    uint8_t zero_high: 1;
+    struct segment_selector segment_selector;
+    uint8_t reserved;
+    enum interrupt_gate_kind gate_type: 4;
+    uint8_t zero: 1;
     uint8_t dpl: 2;
     uint8_t p: 1;
     uint8_t offset_high: 8;
@@ -35,16 +44,18 @@ struct idt_entry {
  *
  * @param offset The 32-bit address in the segment
  * @param segment_selector The offset in the GDT
- * @param reserved 
- * @param d size of gate {1 = 32 bits, 0 = 16 bits}
+ * @param reserved
+ * @param gate_type
  * @param dpl Descriptor Privilege Level
  * @param p Present bit
  */ 
 struct idt_entry encode_idt_entry(
     uint32_t offset, 
-    uint16_t segment_selector,
+    struct segment_selector segment_selector,
     uint8_t reserved,
-    uint8_t d,
+    enum interrupt_gate_kind gate_type,
     uint8_t dpl,
     uint8_t p
 );
+
+#endif

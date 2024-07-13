@@ -49,11 +49,19 @@ interrupt_handler_%1:
 
 %assign i 0
 %rep 256
-%if i == 8 || (10 <= i && i <= 14) || i == 17
+%if i == 8 || (10 <= i && i <= 14) || i == 17 || i == 30
 error_code_interrupt_handler	i
 %else
 no_error_code_interrupt_handler	i
 %endif
 common_interrupt_handler	i
+%assign i i+1
+%endrep
+
+global interrupt_handler_table
+interrupt_handler_table:
+%assign i 0
+%rep 256
+	dd interrupt_handler_%+i
 %assign i i+1
 %endrep
