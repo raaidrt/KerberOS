@@ -6,5 +6,6 @@ clear_interrupt_flag:
 	ret
 
 set_interrupt_flag:
+	cld
 	sti
 	ret

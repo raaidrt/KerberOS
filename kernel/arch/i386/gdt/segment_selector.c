@@ -9,6 +9,6 @@ struct segment_selector encode_segment_selector(
     struct segment_selector segment_selector;
     segment_selector.rpl = rpl;
     segment_selector.ti = ti;
-    segment_selector.index = index;
+    segment_selector.index = index >> 3;
     return segment_selector;
 }

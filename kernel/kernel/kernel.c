@@ -11,9 +11,13 @@
 
 void kernel_main(void) {
 	terminal_initialize();
-	printf("Hello, %s World %d!\nHere is another line\n", "kernel", 42);
+	printf("Hello, kernel word %x!\n", 0x42);
+	printf("Initializing the Global Descriptor Table\n");
 	gdt_initialize();
+	printf("Initializing the Interrupt Descriptor Table\n");
 	idt_initialize();
-	// set_interrupt_flag();
-	printf("GDT Intialization complete\n");
+	printf("Setting the Interrupt Flag\n");
+	set_interrupt_flag();
+	printf("DONE\n");
+	printf("Start shell\n");
 }

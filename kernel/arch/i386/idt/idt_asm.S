@@ -3,5 +3,5 @@
 .extern idt_pointer
 
 load_idt: 
-	lgdt [idt_pointer]
+	lidt [idt_pointer]
 	ret

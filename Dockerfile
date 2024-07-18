@@ -18,8 +18,17 @@ RUN curl -s https://ftp.gnu.org/gnu/gdb/gdb-14.2.tar.gz --output gdb-14.2.tar.gz
     && rm gdb-14.2.tar.gz
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get --quiet --yes update \
-    && apt-get --quiet --yes install grub-pc-bin qemu-system xorriso \
+    && apt-get --quiet --yes install grub-pc-bin qemu-system xorriso libvncserver-dev libgcrypt-dev curl libsdl2-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists
+
+RUN mkdir bochs \
+    && cd bochs \
+    && curl -sL https://sourceforge.net/projects/bochs/files/bochs/2.8/bochs-2.8.tar.gz/download | tar xz --strip-components=1 \
+    && ./configure --with-x11 --with-sdl2 --disable-sdl2-opengl --enable-debugger \
+    && make \
+    && make install
+
+ENV LIBGL_ALWAYS_INDIRECT 1
 
 ENTRYPOINT [ "/bin/bash" ]

@@ -4,9 +4,8 @@
 #include <logger.h>
 
 void gdt_initialize() {
-    dbg_logf("Disabling Interrupts\n");
-    clear_interrupt_flag();
-    
+    // dbg_logf("Disabling Interrupts\n");
+    // clear_interrupt_flag();
     dbg_logf("Initializing the Global Descriptor Table...");
     struct access null_descriptor_access;
     gdt[0] = encode_gdt_entry(0, 0, null_descriptor_access, 0);
@@ -27,8 +26,8 @@ void gdt_initialize() {
         0xC
     );
 
-    gdt_pointer.base = (unsigned int) gdt;
-    gdt_pointer.limit = sizeof(gdt) - 1;
+    gdt_pointer.base = (unsigned int) &gdt;
+    gdt_pointer.limit = 3 * sizeof(struct gdt_entry) - 1;
 
     load_gdt(gdt_pointer);
     dbg_logf("DONE\n");

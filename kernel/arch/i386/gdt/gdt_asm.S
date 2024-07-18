@@ -3,6 +3,7 @@
 .extern gdt_pointer
 
 load_segment_registers:
+	xor ax, ax
 	mov ax, 0x10
 	mov ds, ax
 	mov es, ax

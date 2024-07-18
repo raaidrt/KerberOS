@@ -2,28 +2,15 @@ extern interrupt_handler
 %macro common_interrupt_handler 1
 common_interrupt_handler_%1:               ; the common parts of the generic interrupt handler
 	; save the registers
-	push    eax
-	push    ecx
-	push	edx
-	push	ebx
-	push	esp
-	push    ebp
-	push	esi 
-	push	edi
+	pushad
 
 	; call the C function
+	cld
 	call    interrupt_handler
 
 	; restore the registers
-	pop	edi
-	pop	esi
-	pop	ebp
-	pop	esp
-	pop	ebx
-	pop	edx
-	pop	ecx 
-	pop	eax
-	
+	popad
+
 	; restore the esp
 	add     esp, 8
 

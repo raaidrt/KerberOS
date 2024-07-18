@@ -1,4 +1,5 @@
 #include <kernel/interrupt/interrupt_handler.h>
+#include <logger.h>
 
 void interrupt_handler(
     struct cpu_state cpu, 

@@ -29,14 +29,14 @@ enum interrupt_gate_kind {
  * - (R) reserved
  */ 
 struct idt_entry {
-    uint16_t offset_low;
+    uint16_t offset_low; 
     struct segment_selector segment_selector;
-    uint8_t reserved;
+    uint8_t reserved; 
     enum interrupt_gate_kind gate_type: 4;
     uint8_t zero: 1;
-    uint8_t dpl: 2;
-    uint8_t p: 1;
-    uint8_t offset_high: 8;
+    uint8_t dpl: 2; 
+    uint8_t p: 1; 
+    uint16_t offset_high; 
 }__attribute__((packed));
 
 /** 

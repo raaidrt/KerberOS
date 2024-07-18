@@ -7,6 +7,10 @@
 
 DESCRIPTOR_TABLE(idt, 256)
 
+#define NUM_INTERRUPTS 32
+
 void idt_initialize();
+
+void print_idt_entry(struct idt_entry entry);
 
 #endif

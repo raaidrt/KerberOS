@@ -24,6 +24,8 @@ stack_top:
 .global _start
 .type _start, @function
 _start:
+	cli
+	cld
 	movl $stack_top, %esp
 
 	# Call the global constructors.

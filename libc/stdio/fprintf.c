@@ -4,9 +4,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <bufwriter.h>
+#include <stdint.h>
 
 enum PrintState { FORMAT_SPECIFIER, FORMAT_WRITE_ARG, CHAR_WRITE };
-enum FormatWriteKind { NOT_FORMAT, INT, CHAR, STRING };
+enum FormatWriteKind { NOT_FORMAT, INT, HEX_INT, CHAR, STRING };
 
 /** 
  * write_char - writes one character to the buffer
@@ -73,6 +74,41 @@ static size_t write_int(struct Buffer *buffer, int d) {
 	return write_positive_int(buffer, d);
 }
 
+/** 
+ * wirte_hex_unsigned - writes an unsigned 32-bit integer to the buffer
+ * @buffer: the buffer to write to.
+ * @d: the unsigned integer to write
+ *
+ * Returns the total number of bytes written
+ */
+size_t write_hex_unsigned(struct Buffer *buffer, uint32_t d) {
+	if (d == 0) {
+		return 0;
+	}
+	size_t result = write_hex_unsigned(buffer, d / 16);
+	size_t index = d % 16;
+	write_char(buffer, "0123456789abcdef"[index]);
+	return result + 1;
+}
+
+/**
+ * write_hex_int - writes a 32-bit hexadecimal number to the buffer. 
+ *
+ * @buffer: the buffer to write to
+ * @d: the integer to write
+ *
+ * Returns the number of bytes written.
+ */
+static size_t write_hex_int(struct Buffer *buffer, int d) {
+	write_char(buffer, '0');
+	write_char(buffer, 'x');
+	if (d == 0) {
+		write_char(buffer, '0');
+		return 3;
+	}
+	return write_hex_unsigned(buffer, (uint32_t) d) + 2;
+}
+
 int fprintf(struct Buffer *buffer, const char* restrict format, va_list parameters) {
 	// setup va_args
 	char *ptr = (char *) format;
@@ -96,6 +132,9 @@ int fprintf(struct Buffer *buffer, const char* restrict format, va_list paramete
 			// specifying the format of the argument
 		case 'd':
 			write_kind = INT;
+			goto STATE_SWITCH;
+		case 'x': 
+			write_kind = HEX_INT;
 			goto STATE_SWITCH;
 		case 's':
 			write_kind = STRING;
@@ -139,6 +178,9 @@ int fprintf(struct Buffer *buffer, const char* restrict format, va_list paramete
 			switch (write_kind) {
 			case INT:
 				additional_written = write_int(buffer, va_arg(parameters, int));
+				break;
+			case HEX_INT:
+				additional_written = write_hex_int(buffer, va_arg(parameters, int));
 				break;
 			case STRING:
 				additional_written = write_string(buffer, va_arg(parameters, const char *));
