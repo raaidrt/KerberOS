@@ -6,6 +6,7 @@
 #include <serial.h>
 #include <kernel/idt/idt.h>
 #include <kernel/interrupt/flag.h>
+#include <kernel/irq/irq.h>
 
 #define __is_kerberos_kernel 1
 
@@ -16,6 +17,8 @@ void kernel_main(void) {
 	gdt_initialize();
 	printf("Initializing the Interrupt Descriptor Table\n");
 	idt_initialize();
+	printf("Remapping the IRQ lines\n");
+	pic_remap(0x20, 0x2F);
 	printf("Setting the Interrupt Flag\n");
 	set_interrupt_flag();
 	printf("DONE\n");

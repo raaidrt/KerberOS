@@ -21,8 +21,4 @@ void idt_initialize() {
     idt_pointer.base = (uint32_t) &idt;
     idt_pointer.limit = NUM_INTERRUPTS * sizeof(struct idt_entry) - 1;
     load_idt(idt_pointer);
-
-    for (uint8_t i = 0; i < 16; i++) {
-	IRQ_set_mask(i);
-    }
 }
