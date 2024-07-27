@@ -25,7 +25,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get --quiet --yes update \
 RUN mkdir bochs \
     && cd bochs \
     && curl -sL https://sourceforge.net/projects/bochs/files/bochs/2.8/bochs-2.8.tar.gz/download | tar xz --strip-components=1 \
-    && ./configure --with-x11 --with-sdl2 --disable-sdl2-opengl --enable-debugger \
+    && ./configure --with-x11 --with-sdl2 --disable-sdl2-opengl \
     && make \
     && make install
 
