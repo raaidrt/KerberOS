@@ -3,7 +3,7 @@
 KerberOS is a work-in-progress Operating System that is built from the articles provided on the [OSDev Wiki](https://wiki.osdev.org). 
 
 ## Multiboot Standard
-The KerberOS kernel is multiboot1 compliant. 
+The KerberOS kernel is multiboot1 compliant.
 
 ## Development Environment
 A cross-compiler toolchain and debugging tools have been set up for the `i686-elf` platform using a [Docker container](https://hub.docker.com/r/joshwyant/gcc-cross/) that was linked on the [OSDev Wiki article](https://osdev.org/GCC_Cross-Compiler) for setting up a cross-compiler toolchain. Additionally, the following packages were added to the Docker image:
@@ -19,7 +19,7 @@ docker-compose up
 ```
 To get the Docker development environment up and running, and to connect to it, from a new terminal window, run the command
 ```shell
-docker-compose exec kerberos-dev sh
+docker-compose exec -ti kerberos-dev /bin/bash
 ````
 This will start a new shell from the `kerberos` directory on the newly created development environment. Try to run `./qemu.sh` to make sure that the Docker environment can connect to your xserver properly. 
 
