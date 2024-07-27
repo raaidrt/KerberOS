@@ -7,20 +7,23 @@
 #include <kernel/idt/idt.h>
 #include <kernel/interrupt/flag.h>
 #include <kernel/irq/irq.h>
+#include <kernel/time/time.h>
 
 #define __is_kerberos_kernel 1
 
 void kernel_main(void) {
+	dbg_logf(INCLUDE_TIME, INFO, "Initializing the terminal...");
 	terminal_initialize();
+	dbg_logf(EXCLUDE_TIME, NONE, "DONE\n");
 	printf("Hello, kernel word %x!\n", 0x42);
-	printf("Initializing the Global Descriptor Table\n");
+	dbg_logf(INCLUDE_TIME, INFO, "Initializing the Global Descriptor Table...");
 	gdt_initialize();
-	printf("Initializing the Interrupt Descriptor Table\n");
+	dbg_logf(EXCLUDE_TIME, NONE, "DONE\n");
+	dbg_logf(INCLUDE_TIME, INFO, "Initializing the Interrupt Descriptor Table...");
 	idt_initialize();
-	printf("Remapping the IRQ lines\n");
+	dbg_logf(EXCLUDE_TIME, NONE, "DONE\n");
+	dbg_logf(INCLUDE_TIME, INFO, "Remapping the IRQ lines...");
 	pic_remap(0x20, 0x2F);
-	printf("Setting the Interrupt Flag\n");
+	dbg_logf(EXCLUDE_TIME, NONE, "DONE\n");
 	set_interrupt_flag();
-	printf("DONE\n");
-	printf("Start shell\n");
 }

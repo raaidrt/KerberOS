@@ -5,6 +5,19 @@
 #define _DEBUG_LOG 1
 #endif
 
-void dbg_logf(const char* restrict format, ...);
+enum timing {
+	INCLUDE_TIME,
+	EXCLUDE_TIME
+};
+
+enum log_kind {
+	WARN,
+	DEBUG,
+	INFO,
+	ERROR,
+	NONE
+};
+
+void dbg_logf(enum timing timing, enum log_kind kind, const char* restrict format, ...);
 
 #endif

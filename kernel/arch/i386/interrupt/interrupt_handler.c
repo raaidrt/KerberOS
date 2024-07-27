@@ -4,6 +4,7 @@
 #include <panic.h>
 #include <io.h>
 #include <stdbool.h>
+#include <kernel/time/time.h>
 
 #define KBD_DATA_PORT   0x60
 
@@ -27,6 +28,12 @@ void interrupt_handler(
     if (32 <= interrupt && interrupt < 32 + 16) {
 	// handling an IRQ
 	send_eoi = true;
+	int irq = interrupt - 32;
+	if (irq == 8) {
+	    // IRQ 8 i.e. the Real Time Clock
+	    struct time time = get_time_irq8();
+	    handle_rtc_ready(time);
+	}
     }
 
     if (interrupt == 8 

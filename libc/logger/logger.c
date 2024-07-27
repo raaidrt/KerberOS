@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <bufwriter.h>
 #include <serial.h>
+#include <kernel/time/time.h>
 
 static int serial_initialized = 0;
 
@@ -19,7 +20,15 @@ size_t log_writen(char *src, size_t n) {
 	return n_written;
 }
 
-void dbg_logf(const char* restrict format, ...) {
+void buffer_write(struct Buffer *buffer, const char *restrict format, ...) {
+	va_list parameters;
+	va_start(parameters, format);
+	fprintf(buffer, format, parameters);
+}
+
+void dbg_logf(enum timing timing, enum log_kind kind, const char* restrict format, ...) {
+
+
 	if (serial_initialized == 0) {
 		serial_initialized = 1;
 		serial_initialize();
@@ -35,6 +44,37 @@ void dbg_logf(const char* restrict format, ...) {
 	buffer.buf_len = buf_len;
 	buffer.n_written = 0;
 	buffer.writen = &log_writen;
-    fprintf(&buffer, format, parameters);
-    return;
+	
+	if (timing == INCLUDE_TIME) {
+		char time_buffer[20];
+		iso_8601_format(time_buffer, get_time());
+
+		// write the time
+		buffer_write(&buffer, "[%s] ", time_buffer);
+	}
+	
+	char *kind_str;
+	switch (kind) {
+	case WARN:
+		kind_str = "[WARN] ";
+		break;
+	case DEBUG:
+		kind_str = "[DEBUG] ";
+		break;
+	case INFO:
+		kind_str = "[INFO] ";
+		break;
+	case ERROR:
+		kind_str = "[ERROR] ";
+		break;
+	default:
+		kind_str = "";
+	}
+	buffer_write(&buffer, "%s", kind_str);
+
+	fprintf(&buffer, format, parameters);
+
+	return;
 }
+
+
