@@ -24,5 +24,7 @@ docker-compose exec kerberos-dev sh
 This will start a new shell from the `kerberos` directory on the newly created development environment. Try to run `./qemu.sh` to make sure that the Docker environment can connect to your xserver properly. 
 
 ## Running the Kernel
-Use the command `./qemu.sh` to run the kernel on QEMU within the specified Docker container. If you are having issues connected to the xserver on MacOS, install XQuartz. Under the XQuartz menu, select Preferences
+Use the command `./qemu.sh` to run the kernel on QEMU within the specified Docker container. If you are having issues connected to the xserver on MacOS, install XQuartz. Under the XQuartz menu, select Preferences.
 Go to the security tab and ensure "Allow connections from network clients" is checked. This will allow the Docker container to connect to the xserver on your Mac.
+
+You can also use `./bochs.sh` if you want to emulate the kernel using Bochs instead of QEMU.
