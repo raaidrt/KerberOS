@@ -8,10 +8,21 @@
 #include <kernel/interrupt/flag.h>
 #include <kernel/irq/irq.h>
 #include <kernel/time/time.h>
+#include <kernel/multiboot/multiboot.h>
 
 #define __is_kerberos_kernel 1
 
-void kernel_main(void) {
+extern char _kernel_virtual_start, _kernel_virtual_end;
+
+void kernel_main(uintptr_t ebx) {
+	multiboot_info_t *mbinfo = (multiboot_info_t *) (ebx + 0xC0000000);
+	uint32_t mb_mem_lower = mbinfo->mem_lower;
+	uint32_t mb_mem_upper = mbinfo->mem_upper;
+	dbg_logf(INCLUDE_TIME, INFO, "Multiboot mem_lower = %d, mem_upper = %d\n", mb_mem_lower, mb_mem_upper);
+	uintptr_t kstart = (uintptr_t) &_kernel_virtual_start;
+	uintptr_t kend = (uintptr_t) &_kernel_virtual_end;
+	int ksize = (int) kend - (int) kstart;
+	dbg_logf(INCLUDE_TIME, INFO, "kernel start = %x, kernel end = %x, kernel size = %d\n", kstart, kend, ksize);
 	dbg_logf(INCLUDE_TIME, INFO, "Initializing the terminal...");
 	terminal_initialize();
 	dbg_logf(EXCLUDE_TIME, NONE, "DONE\n");

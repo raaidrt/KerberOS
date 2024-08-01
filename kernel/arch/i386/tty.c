@@ -24,7 +24,7 @@
  */
 static const size_t VGA_WIDTH = 80;
 static const size_t VGA_HEIGHT = 25;
-static struct FBCell* const VGA_MEMORY = (struct FBCell*) 0xB8000;
+static struct FBCell* const VGA_MEMORY = (struct FBCell*) 0xC00B8000;
 
 static size_t terminal_row;
 static size_t terminal_column;
