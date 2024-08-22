@@ -1,5 +1,5 @@
 #ifndef _DESCRIPTOR_TABLE_H
-#define _DESCRIPTOR_TABLE
+#define _DESCRIPTOR_TABLE_H
 
 #define DESCRIPTOR_TABLE(TABLE, NUM_ENTRIES) \
     __attribute__((aligned(0x10))) \
